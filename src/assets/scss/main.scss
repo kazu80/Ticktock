@@ -1,0 +1,150 @@
+@import "autoload";
+
+main {
+  margin: 0 auto;
+  max-width: 108rem;
+
+  .edge {
+    position: relative;
+    width: $diameter;
+    height: $diameter;
+    border-radius: 50%;
+    border: 1px solid $colorBlock;
+    z-index: 0;
+
+    .caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FFF;
+      text-shadow: 2px 2px 2px rgba(0,0,0,0.6);
+      font-size: 8rem;
+      z-index: 5;
+    }
+
+    .dial {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $diameter;
+      height: $diameter;
+      margin: 0;
+      list-style: none;
+
+      .clock-number {
+        position: absolute;
+        top: $paddingDial;
+        left: 50%;
+        width: $clockNumberWidth;
+        text-align: center;
+        transform: translateX(-50%);
+        font-size: 8rem;
+        z-index: 5;
+        transform-origin: ($clockNumberWidth / 2) (($diameter / 2) - $paddingDial);
+
+        @mixin clockNumber($num) {
+          transform: translateX(-50%) rotate($num * 30deg);
+          div {
+            transform: rotate($num * 30deg * -1);
+            transform-origin: center center;
+          }
+        }
+
+        &.one {
+          @include clockNumber(1);
+        }
+
+        &.two {
+          @include clockNumber(2);
+        }
+
+        &.three {
+          @include clockNumber(3);
+        }
+
+        &.four {
+          @include clockNumber(4);
+        }
+
+        &.five {
+          @include clockNumber(5);
+        }
+
+        &.six {
+          @include clockNumber(6);
+        }
+
+        &.seven {
+          @include clockNumber(7);
+        }
+
+        &.eight {
+          @include clockNumber(8);
+        }
+
+        &.nine {
+          @include clockNumber(9);
+        }
+
+        &.ten {
+          @include clockNumber(10);
+        }
+
+        &.eleven {
+          @include clockNumber(11);
+        }
+
+        &.twelve {
+          @include clockNumber(12);
+        }
+      }
+    }
+
+    .edge-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68rem;
+      height: 68rem;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    @mixin hand($width, $height, $color, $rotateOriginX, $rotateOriginY) {
+      position: absolute;
+      top: calc(50% + #{$extraHand});
+      left: 50%;
+      transform: translate(-50%, -100%) rotate(0deg);
+      width: $width;
+      height: $height + $extraHand;
+      background-color: $color;
+      transform-origin: $rotateOriginX $rotateOriginY;
+    }
+
+    .hour-hand {
+      @include hand(0.8rem, 35rem, black, 0.4rem, 35rem);
+      z-index: 6;
+    }
+
+    .minute-hand {
+      @include hand(0.5rem, 48rem, black, 0.25rem, 48rem);
+      z-index: 8;
+    }
+
+    .second-hand {
+      @include hand(0.2rem, 48rem, #1C8E51, 0.1rem, 48rem);
+      z-index: 10;
+    }
+  }
+}
