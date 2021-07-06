@@ -1,4 +1,5 @@
-import { ticktock } from "./ticktock";
+import {ticktock} from "./ticktock";
+
 
 window.addEventListener('load', (event) => {
     const hourHand = document.getElementById('hour')

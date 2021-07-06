@@ -1,27 +1,6 @@
-import {observer} from "./observer";
 import state from "./state";
 
-// Todo Move ticktock/index.ts
-export const ticktock = () => {
-    observer.observeState(state, 'start', cbChangeStartValue)
-
-    return {
-        start,
-        stop
-    }
-};
-
-const start = async () => {
-    await adjustMillisecond()
-    state.set('start', true)
-}
-
-const stop = () => {
-    state.set('start', false)
-}
-
-// Todo Move ticktock/ticktock.ts
-const cbChangeStartValue = (key: string, val: boolean, prev: boolean) => {
+export const cbChangeStartValue = (key: string, val: boolean, prev: boolean) => {
     if (val === true) {
         const startIntervalID = setInterval(() => {
             getDatetime()
@@ -33,7 +12,7 @@ const cbChangeStartValue = (key: string, val: boolean, prev: boolean) => {
     }
 }
 
-const adjustMillisecond = async () => {
+export const adjustMillisecond = async () => {
     const _interval = async () => {
         await new Promise(resolve => setTimeout(resolve, 1))
         const msec = Date.now()
@@ -50,7 +29,23 @@ const getDatetime = () => {
     const min = datetime.getMinutes()
     const sec = datetime.getSeconds()
 
-    // Todo Move to other function
+    const angle = getAngle(hour, min, sec)
+
+    const eventInitTicktock = new CustomEvent('initTicktock', {
+        detail: {
+            time : {
+                hour,
+                min,
+                sec
+            },
+            angle
+        }
+    })
+
+    window.dispatchEvent(eventInitTicktock)
+}
+
+const getAngle = (hour: number, min: number, sec: number): {hour: number, min: number, sec: number} => {
     const hourInClock = 12
     const minInClock = 60
     const secInClock = 60
@@ -64,20 +59,9 @@ const getDatetime = () => {
     const degMinute = (min * anglePerMin) + (sec * angleSecAtAngleMin)
     const degSecond = sec * anglePerSec
 
-    const eventInitTicktock = new CustomEvent('initTicktock', {
-        detail: {
-            time : {
-                hour,
-                min,
-                sec
-            },
-            angle : {
-                hour: degHour,
-                min: degMinute,
-                sec: degSecond
-            }
-        }
-    })
-
-    window.dispatchEvent(eventInitTicktock)
+    return {
+        hour: degHour,
+        min: degMinute,
+        sec: degSecond
+    }
 }

@@ -5,7 +5,6 @@ const observeState = (state: Map<string, any>, observeKey: string, callback: Obs
         if (observeKey !== key) return
 
         let prev: any = undefined
-        // Todo async/await
         setInterval(() => {
             const now = state.get(key)
             if (now !== prev) {
