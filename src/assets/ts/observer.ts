@@ -1,8 +1,11 @@
-const observeState = (state, observeKey, callback) => {
-    state.forEach((val, key, state) => {
+type ObserverCallback = (key: string, now: any, prev: any) => void
+
+const observeState = (state: Map<string, any>, observeKey: string, callback: ObserverCallback) => {
+    state.forEach((val: any, key: string, state) => {
         if (observeKey !== key) return
 
-        let prev = undefined
+        let prev: any = undefined
+        // Todo async/await
         setInterval(() => {
             const now = state.get(key)
             if (now !== prev) {

@@ -1,6 +1,7 @@
 import {observer} from "./observer";
 import state from "./state";
 
+// Todo Move ticktock/index.ts
 export const ticktock = () => {
     observer.observeState(state, 'start', cbChangeStartValue)
 
@@ -10,14 +11,16 @@ export const ticktock = () => {
     }
 };
 
-const start = () => {
-    adjustMillisecond()
+const start = async () => {
+    await adjustMillisecond()
+    state.set('start', true)
 }
 
 const stop = () => {
     state.set('start', false)
 }
 
+// Todo Move ticktock/ticktock.ts
 const cbChangeStartValue = (key: string, val: boolean, prev: boolean) => {
     if (val === true) {
         const startIntervalID = setInterval(() => {
@@ -30,14 +33,14 @@ const cbChangeStartValue = (key: string, val: boolean, prev: boolean) => {
     }
 }
 
-const adjustMillisecond = () => {
-    const adjustMsecIntervalID = setInterval(() => {
+const adjustMillisecond = async () => {
+    const _interval = async () => {
+        await new Promise(resolve => setTimeout(resolve, 1))
         const msec = Date.now()
-        if (msec % 1000 < 100) {
-            clearInterval(adjustMsecIntervalID)
-            state.set('start', true)
-        }
-    })
+        if (!(msec % 1000 < 100)) await _interval()
+    }
+
+    await _interval();
 }
 
 const getDatetime = () => {
@@ -47,6 +50,7 @@ const getDatetime = () => {
     const min = datetime.getMinutes()
     const sec = datetime.getSeconds()
 
+    // Todo Move to other function
     const hourInClock = 12
     const minInClock = 60
     const secInClock = 60

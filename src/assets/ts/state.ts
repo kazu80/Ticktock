@@ -1,6 +1,4 @@
-type
-
-const state = new Map()
+const state = new Map<string, any>()
 
 state.set('start', false)
 state.set('startIntervalID', undefined)

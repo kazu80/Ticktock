@@ -1,11 +1,15 @@
 import { ticktock } from "./ticktock";
 
 window.addEventListener('load', (event) => {
-    window.addEventListener('initTicktock', (e: CustomEvent) => {
-        const hourHand = document.getElementById('hour')
-        const minuteHand = document.getElementById('minute')
-        const secondHand = document.getElementById('second')
+    const hourHand = document.getElementById('hour')
+    const minuteHand = document.getElementById('minute')
+    const secondHand = document.getElementById('second')
 
+    if (!hourHand || !minuteHand || !secondHand) {
+        throw new Error('not find element')
+    }
+
+    window.addEventListener('initTicktock', ((e: CustomEvent ) => {
         const { angle } = e.detail
 
         const degHour = `${angle.hour}deg`
@@ -15,10 +19,7 @@ window.addEventListener('load', (event) => {
         hourHand.style.transform = `translate(-50%, -100%) rotate(${degHour})`
         minuteHand.style.transform = `translate(-50%, -100%) rotate(${degMinute})`
         secondHand.style.transform = `translate(-50%, -100%) rotate(${degSecond})`
-    })
+    }) as EventListener)
 
-    const foo = ticktock()
-    foo.start()
-
-    setInterval(() => foo.stop(), 5000)
+    ticktock().start()
 })
