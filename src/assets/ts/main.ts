@@ -10,7 +10,7 @@ window.addEventListener('load', (event) => {
         throw new Error('not find element')
     }
 
-    window.addEventListener('initTicktock', ((e: CustomEvent ) => {
+    window.addEventListener('ticktock-1000', ((e: CustomEvent ) => {
         const { angle } = e.detail
 
         const degHour = `${angle.hour}deg`
