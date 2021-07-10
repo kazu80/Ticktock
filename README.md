@@ -1,7 +1,7 @@
 # Ticktock.web.js
 
 ## Features
-I created a module that makes it easy to make a clock. Introduction We aimed to make analog clocks easy on the Web.
+I created a module that makes it easy to make a clock. Introduction I aimed to make analog clocks easy on the Web.
 
 ## Installation
 
@@ -61,8 +61,4 @@ I am thinking of the following updates in the future
 - Updates for digital clocks
 - Update for timer
 - Schedule function
-
-## Note
-
-Doesn't work hot reload.
 
