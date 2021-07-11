@@ -6,18 +6,19 @@ module.exports = {
     mode: 'development',
 
     entry: {
-        index: [
+        "demo/assets/js/main": [
             './src/assets/ts/main.ts',
             './src/assets/scss/main.scss'
         ],
+        "index": './src/assets/ts/ticktock/index.ts'
     },
 
     // ファイルの出力設定
     output: {
         //  出力ファイルのディレクトリ名
-        path: `${__dirname}/dist/assets/js`,
+        path: `${__dirname}/dist`,
         // 出力ファイル名
-        filename: "main.js"
+        filename: "[name].js"
     },
 
     module: {
@@ -74,7 +75,7 @@ module.exports = {
             patterns: [
                 {
                     from: './',
-                    to: '../../',
+                    to: '../dist/demo',
                     filter: async (resourcePath) => {
                         return new RegExp('\.html$').test(resourcePath);
                     },
@@ -87,7 +88,7 @@ module.exports = {
             patterns: [
                 {
                     from: './',
-                    to: '../images/',
+                    to: './demo/assets/images/',
                     filter: async (resourcePath) => {
                         return new RegExp('\.(png|jpg|jpeg|gif|svg)$').test(resourcePath);
                     },
