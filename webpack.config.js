@@ -1,5 +1,4 @@
-const MiniCssExtractPlugin    = require('mini-css-extract-plugin');
-const CopyWebpackPlugin       = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // モード値を production に設定すると最適化された状態で、
@@ -21,14 +20,6 @@ module.exports = {
         filename: "main.js"
     },
 
-    // ローカル開発用環境を立ち上げる
-    // 実行時にブラウザが自動的に localhost を開く
-    devServer: {
-        contentBase: "./dist",
-        port: 3000,
-        open: true
-    },
-
     module: {
         rules: [
             {
@@ -40,9 +31,28 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    {loader: MiniCssExtractPlugin.loader},
-                    {loader: 'css-loader'},
-                    {loader: 'sass-loader'},
+                    {loader: "style-loader"},
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            // オプションでCSS内のurl()メソッドの取り込みを禁止する
+                            url: false,
+                            // ソースマップの利用有無
+                            sourceMap: true,
+
+                            // 0 => no loaders (default);
+                            // 1 => postcss-loader;
+                            // 2 => postcss-loader, sass-loader
+                            importLoaders: 2
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            // ソースマップの利用有無
+                            sourceMap: true
+                        }
+                    },
                 ],
             }
         ],
@@ -60,9 +70,6 @@ module.exports = {
     },
 
     plugins: [
-        // cssの出力先を指定する
-        new MiniCssExtractPlugin({filename: '../css/[name].css'}),
-
         new CopyWebpackPlugin({
             patterns: [
                 {
@@ -88,5 +95,7 @@ module.exports = {
                 },
             ]
         })
-    ]
+    ],
+    // ES5(IE11等)向けの指定（webpack 5以上で必要）
+    target: ["web", "es5"],
 };

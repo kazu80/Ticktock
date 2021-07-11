@@ -1,3 +1,5 @@
+@use "sass:list";
+@use "sass:math";
 @import "autoload";
 
 main {
@@ -41,7 +43,7 @@ main {
         transform: translateX(-50%);
         font-size: 8rem;
         z-index: 5;
-        transform-origin: ($clockNumberWidth / 2) (($diameter / 2) - $paddingDial);
+        transform-origin: math.div($clockNumberWidth, 2) ( math.div($diameter, 2) - $paddingDial);
 
         @mixin clockNumber($num) {
           transform: translateX(-50%) rotate($num * 30deg);
